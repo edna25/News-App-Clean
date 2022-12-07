@@ -3,11 +3,14 @@ package com.newsappclean.ui
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log.e
+import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.newsappclean.R
 import com.newsappclean.databinding.ActivityMainBinding
 import com.newsappclean.di.AppContainer
 import com.newsappclean.domain.ArticleData
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         val appContainer = AppContainer()
         presenter = appContainer.mainFactory.create()
-        presenter.onViewReady(this@MainActivity)
+        presenter.onViewReady(this@MainActivity, "")
     }
 
     override fun showLoading() {
@@ -55,11 +58,30 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             // (Dialog Interface, Int) -> Unit this function represented as High-Order Function
             // Dialog Interface instance of the dialog, int the ID of the button clicked
             //_ is used as passed if the arguments aren't used.
-            presenter.onViewReady(this@MainActivity)
+            presenter.onViewReady(this@MainActivity, "")
         }
         builder.setNegativeButton("Cancel") { _, _ ->
             finish()
         }
         builder.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        val menuItem = menu?.findItem(R.id.search_button)
+        val searchView = menuItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                presenter.onViewDestroy()
+                presenter.onViewReady(this@MainActivity, query!!)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                return false
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

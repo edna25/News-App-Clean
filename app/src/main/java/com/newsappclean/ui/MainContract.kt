@@ -12,7 +12,7 @@ interface MainContract {
     }
     interface Presenter
     {
-        fun onViewReady(v : View)
+        fun onViewReady(view : View, query : String)
         fun onViewDestroy()
 //        fun onItemClicked(position:Int)
     }

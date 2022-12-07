@@ -17,4 +17,10 @@ class ArticlesRepository(private val remoteService: NewsRemoteService): ArticleG
 
     }
 
+    override suspend fun fetchArticles(query: String): MutableList<ArticleData> {
+        return withContext(Dispatchers.IO){
+            remoteService.getArticlesEverything(apiKey, query).articleResult.map { it.toDomain() }
+        }.toMutableList()
+    }
+
 }
