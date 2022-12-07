@@ -9,6 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -22,6 +23,9 @@
             android:id="@+id/recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
             android:padding="5dp" />
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
