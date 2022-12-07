@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NewsAppClean</string>
+    <string name="app_title">Today\'s News</string>
 </resources>

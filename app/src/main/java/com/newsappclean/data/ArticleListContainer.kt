@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ArticleListContainer(
     @SerializedName("articles")
-    var articleList: List<ArticleDataRaw>
+    val articleResult: MutableList<ArticleDataRaw>
 )

@@ -10,6 +10,7 @@ class AppContainer {
     private val newsRemoteService = retrofit.create(NewsRemoteService::class.java)
     private val articleGateway : ArticleGateway = ArticlesRepository(newsRemoteService)
     val mainFactory = MainFactory(articleGateway)
+
     companion object{
         private const val base = "https://newsapi.org/"
         private val retrofit = Retrofit.Builder()

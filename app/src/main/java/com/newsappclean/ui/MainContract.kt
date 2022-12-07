@@ -7,7 +7,8 @@ interface MainContract {
     {
         fun showLoading()
         fun hideLoading()
-        fun showArticles(articleList: List<ArticleData>)
+        fun showArticles(articleList: MutableList<ArticleData>)
+        fun showDialog(msg : String)
     }
     interface Presenter
     {

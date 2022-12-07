@@ -1,6 +1,8 @@
 package com.newsappclean.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log.e
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -39,8 +41,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         progressBar.visibility = View.GONE
     }
 
-    override fun showArticles(articleList: List<ArticleData>) {
+    override fun showArticles(articleList: MutableList<ArticleData>) {
         val adapter = ViewHolderAdapter(this@MainActivity, articleList)
         recyclerView.adapter = adapter
+    }
+
+    override fun showDialog(msg: String) {
+        e(">>", msg)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Alert")
+        builder.setMessage("Connection Interrupted: ".plus(msg))
+        builder.setPositiveButton("Try Again") { _, _ ->
+            // (Dialog Interface, Int) -> Unit this function represented as High-Order Function
+            // Dialog Interface instance of the dialog, int the ID of the button clicked
+            //_ is used as passed if the arguments aren't used.
+            presenter.onViewReady(this@MainActivity)
+        }
+        builder.setNegativeButton("Cancel") { _, _ ->
+            finish()
+        }
+        builder.show()
     }
 }
