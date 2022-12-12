@@ -2,7 +2,7 @@ package com.newsappclean.data
 
 import com.newsappclean.domain.ArticleData
 
-fun ArticleDataRaw.toDomain() = ArticleData(
+fun ArticleDataRaw.toDetails() = ArticleData(
     author = author,
     title = title,
     description = description,

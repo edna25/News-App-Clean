@@ -8,10 +8,11 @@ import kotlinx.coroutines.withContext
 class ArticlesRepository(private val remoteService: NewsRemoteService): ArticleGateway
 {
     private val apiKey = "98262df4f3a14d19a3b6cc84be8c004e"
+    private val country = "ph"
 
     override suspend fun fetchArticles(): MutableList<ArticleData>{
         return withContext(Dispatchers.IO){
-            val result = remoteService.getsArticles(apiKey, "ph").articleResult.map { it.toDomain() }
+            val result = remoteService.getsArticles(apiKey, country).articleResult.map { it.toDetails() }
             result
         }.toMutableList()
 
@@ -19,7 +20,7 @@ class ArticlesRepository(private val remoteService: NewsRemoteService): ArticleG
 
     override suspend fun fetchArticles(query: String): MutableList<ArticleData> {
         return withContext(Dispatchers.IO){
-            remoteService.getArticlesEverything(apiKey, query).articleResult.map { it.toDomain() }
+            remoteService.getArticlesEverything(apiKey, query).articleResult.map { it.toDetails() }
         }.toMutableList()
     }
 

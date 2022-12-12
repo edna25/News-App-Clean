@@ -1,11 +1,11 @@
 package com.newsappclean.ui
 
 import com.newsappclean.domain.ArticleData
-import com.newsappclean.domain.ArticleGateway
+import com.newsappclean.usecase.FetchArticlesUseCase
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class Presenter(private val repo:ArticleGateway):MainContract.Presenter {
+class Presenter(private val fetchArticlesUseCase: FetchArticlesUseCase):MainContract.Presenter {
 
     private var view: MainContract.View? = null
     private var articles = mutableListOf<ArticleData>()
@@ -17,9 +17,9 @@ class Presenter(private val repo:ArticleGateway):MainContract.Presenter {
         scope.launch {
             try{
                 articles = if(query.isEmpty()){
-                    repo.fetchArticles()
+                    fetchArticlesUseCase.fetchArticles()
                 }else{
-                    repo.fetchArticles(query)
+                    fetchArticlesUseCase.fetchArticles(query)
                 }
                 if(articles.isNotEmpty()){
                     view.showArticles(articles)
@@ -33,6 +33,7 @@ class Presenter(private val repo:ArticleGateway):MainContract.Presenter {
     }
 
     override fun onViewDestroy() {
+        view?.hideLoading()
         view = null
     }
 

@@ -72,16 +72,22 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val searchView = menuItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                presenter.onViewDestroy()
-                presenter.onViewReady(this@MainActivity, query!!)
+                searchArticles(this@MainActivity, query!!)
                 return false
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
+                if(query == ""){
+                    searchArticles(this@MainActivity, query)
+                }
                 return false
             }
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+    fun searchArticles(view: MainContract.View, query: String){
+        presenter.onViewDestroy()
+        presenter.onViewReady(view, query)
     }
 }
