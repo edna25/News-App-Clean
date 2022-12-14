@@ -12,9 +12,9 @@ interface MainContract {
     }
     interface Presenter
     {
-        fun onViewReady(view : View, query : String)
+        fun onViewReady(view : View)
         fun onViewDestroy()
-//        fun onItemClicked(position:Int)
+        fun searchArticles(query:String)
     }
     interface ItemClicked
     {

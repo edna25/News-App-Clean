@@ -1,10 +1,10 @@
 package com.newsappclean.di
 
+import com.newsappclean.domain.usecase.FetchArticlesUseCase
 import com.newsappclean.ui.Presenter
-import com.newsappclean.usecase.FetchArticlesUseCase
 
-class MainFactory(private val fetchArticlesUseCase: FetchArticlesUseCase):Factory<Presenter> {
-    override fun create(): Presenter {
+class MainFactory(private val fetchArticlesUseCase: FetchArticlesUseCase) {
+    fun create(): Presenter {
         return Presenter(fetchArticlesUseCase)
     }
 }

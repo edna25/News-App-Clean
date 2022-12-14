@@ -46,8 +46,8 @@ class ViewHolderAdapter(var context: Context, var articles: List<ArticleData>): 
             holder.contributorDate.text = author.plus("| $datePublish")
         }
         holder.image.setImageUrl(currentArticleData.urlToImage)
-        holder.image.setErrorImageResId(R.drawable.ic_launcher_background)
-        holder.image.setDefaultImageResId(R.drawable.ic_launcher_foreground)
+        holder.image.setErrorImageResId(R.mipmap.ic_launcher_error)
+        holder.image.setDefaultImageResId(R.mipmap.ic_launcher_error)
         holder.setItemClicked(object : MainContract.ItemClicked{
             override fun onClicked(view: View, position: Int) {
                 val intent = Intent(context, WebActivity::class.java)

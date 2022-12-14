@@ -2,7 +2,6 @@ package com.newsappclean.ui
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log.e
 import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         val appContainer = AppContainer()
         presenter = appContainer.mainFactory.create()
-        presenter.onViewReady(this@MainActivity, "")
+        presenter.onViewReady(this@MainActivity)
     }
 
     override fun showLoading() {
@@ -50,20 +49,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showDialog(msg: String) {
-        e(">>", msg)
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Alert")
-        builder.setMessage("Connection Interrupted: ".plus(msg))
+        builder.setMessage(msg)
         builder.setPositiveButton("Try Again") { _, _ ->
-            // (Dialog Interface, Int) -> Unit this function represented as High-Order Function
-            // Dialog Interface instance of the dialog, int the ID of the button clicked
-            //_ is used as passed if the arguments aren't used.
-            presenter.onViewReady(this@MainActivity, "")
+            presenter.onViewReady(this@MainActivity)
         }
         builder.setNegativeButton("Cancel") { _, _ ->
             finish()
-        }
-        builder.show()
+        }.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -72,22 +66,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val searchView = menuItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchArticles(this@MainActivity, query!!)
+                presenter.searchArticles(query!!)
                 return false
             }
-
             override fun onQueryTextChange(query: String?): Boolean {
-                if(query == ""){
-                    searchArticles(this@MainActivity, query)
+                if(query.equals("")){
+                    presenter.searchArticles(query!!)
                 }
                 return false
             }
-
         })
         return super.onCreateOptionsMenu(menu)
-    }
-    fun searchArticles(view: MainContract.View, query: String){
-        presenter.onViewDestroy()
-        presenter.onViewReady(view, query)
     }
 }

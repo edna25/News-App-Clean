@@ -9,5 +9,5 @@ fun ArticleDataRaw.toDetails() = ArticleData(
     url = url,
     urlToImage = urlToImage,
     publishedAt = publishedAt,
-    content = content,
+    content = content
 )

@@ -3,7 +3,7 @@ package com.newsappclean.di
 import com.newsappclean.data.ArticlesRepository
 import com.newsappclean.data.NewsRemoteService
 import com.newsappclean.domain.ArticleGateway
-import com.newsappclean.usecase.FetchArticlesUseCase
+import com.newsappclean.domain.usecase.FetchArticlesUseCase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

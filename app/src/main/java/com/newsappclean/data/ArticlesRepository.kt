@@ -12,16 +12,13 @@ class ArticlesRepository(private val remoteService: NewsRemoteService): ArticleG
 
     override suspend fun fetchArticles(): MutableList<ArticleData>{
         return withContext(Dispatchers.IO){
-            val result = remoteService.getsArticles(apiKey, country).articleResult.map { it.toDetails() }
-            result
+            remoteService.getArticles(apiKey, country).articleResult.map { it.toDetails() }
         }.toMutableList()
-
     }
 
     override suspend fun fetchArticles(query: String): MutableList<ArticleData> {
         return withContext(Dispatchers.IO){
-            remoteService.getArticlesEverything(apiKey, query).articleResult.map { it.toDetails() }
+            remoteService.searchArticles(apiKey, query).articleResult.map { it.toDetails() }
         }.toMutableList()
     }
-
 }
